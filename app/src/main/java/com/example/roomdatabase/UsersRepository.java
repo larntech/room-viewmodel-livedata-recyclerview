@@ -34,4 +34,25 @@ public class UsersRepository {
         }.execute();
     }
 
+    public void deleteUser(final Users users){
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                database.usersDao().deleteUser(users);
+                return null;
+            }
+        }.execute();
+    }
+
+
+    public void updateUser(final Users users){
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                database.usersDao().updateUser(users);
+                return null;
+            }
+        }.execute();
+    }
+
 }

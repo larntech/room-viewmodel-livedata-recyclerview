@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements UsersAdapter.ItemClicked {
 
     ViewModel userViewModel;
 
@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         userViewModel = ViewModelProviders.of(this).get(ViewModel.class);
-        usersAdapter = new UsersAdapter();
+        usersAdapter = new UsersAdapter(this);
         recyclerView = findViewById(R.id.recyclerView);
         btnNewUser = findViewById(R.id.btnNewUser);
 
@@ -93,4 +93,43 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
+    public void updateUsers(final Users users){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final View view1 = getLayoutInflater().inflate(R.layout.row_add_uses,null);
+        final EditText edUsers = view1.findViewById(R.id.edUsers);
+
+        edUsers.setText(users.getUsername());
+
+        Button addUser = view1.findViewById(R.id.btnAddUser);
+
+        addUser.setText("Update");
+        addUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                users.setUsername(edUsers.getText().toString());
+                userViewModel.updateUser(users);
+            }
+        });
+
+        builder.setView(view1);
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+
+
+    }
+
+
+    @Override
+    public void updateClicked(Users users) {
+        updateUsers(users);
+    }
+
+    @Override
+    public void deleteClicked(Users users) {
+
+        userViewModel.deleteUser(users);
+    }
 }

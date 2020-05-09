@@ -29,4 +29,13 @@ public class ViewModel extends AndroidViewModel {
         usersRepository.insertUsers(users);
     }
 
+
+    public void updateUser(Users users){
+        usersRepository.updateUser(users);
+    }
+
+    public void deleteUser(Users users){
+        usersRepository.deleteUser(users);
+    }
+
 }
